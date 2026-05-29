@@ -51,11 +51,11 @@
   "network": {
     "interface": "wlan0",
     "format": "{ifname}",
-    "format-wifi": "{essid} ({signalStrength}%)",
+    "format-wifi": "{essid} ({signalStrength}%)<big></big>",
     "format-ethernet": "{ipaddr}/{cidr}",
     "format-disconnected": "", //An empty format will hide the module.
     "tooltip-format": "{ifname} via {gwaddr} 󰊗",
-    "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%) <big></big>",
     "tooltip-format-ethernet": "{ifname} ",
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 45
@@ -66,7 +66,7 @@
     "format": "{capacity}% {icon}",
     "format-icons": {
         "default": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
-        "charging": ["󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"]
+        "charging": ["<big>󰢟</big>", "<big>󰢜</big>", "<big>󰂆</big>", "<big>󰂇</big>", "<big>󰂈</big>", "<big>󰢝</big>", "<big>󰂉</big>", "<big>󰢞</big>", "<big>󰂊</big>", "<big>󰂋</big>", "<big>󰂅</big>"]
     }
   },
     "custom/notification": {
