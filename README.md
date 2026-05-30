@@ -25,7 +25,7 @@ Pipeline of the process:
 
 - **image retrieval** <br>
 using the frame number generated using frame_calc.py, we can determine and download the exact Image from the NASA Scientific Visualization Studio. 
-*moon_update.sh* script will use frame_calc, get the frame, calculate the url, download the .tif file for next frame , convert it to png using magick tool to convert tif file to png file, use hyprpaper to change the wallpaper. 
+*moon_update.sh* script will use frame_calc, get the frame number, download the .tif file for next frame , convert it to png using magick tool to convert tif file to png file, use hyprpaper to change the wallpaper. 
 
 - **Cache management** 
 
