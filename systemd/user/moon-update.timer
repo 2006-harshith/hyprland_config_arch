@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Moon Wallpaper Update
+
+[Timer]
+OnBootSec=30s
+OnCalendar=hourly
+Persistent=true
+
+[Install]
+WantedBy=timers.target

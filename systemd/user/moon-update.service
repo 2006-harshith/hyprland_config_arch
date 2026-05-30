@@ -1,0 +1,6 @@
+[Unit]
+Description=Moon Wallpaper Update
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/moonphase/moon_update.sh
