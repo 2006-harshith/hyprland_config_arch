@@ -1,103 +1,121 @@
-@import "colors/one-dark.css";
+@import "colors/lunar.css";
 
 * {
-  border: none;
-  border-radius: 0px;
-  font-size: 19px;
-  font-family: "Terminess Nerd Font Mono";
-  font-weight: bold;
-
-  /* font-size: 16px; */
-
-  min-height: 0;
-  padding: 0;
-  margin: 0;
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font", "Terminess Nerd Font Mono", monospace;
+    font-size: 13px;
+    font-weight: 500;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
 }
 
 window#waybar {
-  background: transparent;
-
+    background: transparent;
 }
 
 tooltip {
-  background: @bg0;
-  border: 0px solid @bg3;
-  border-radius: 12px;
+    background: @bg1;
+    border: 1px solid @bg3;
+    border-radius: 6px;
 }
 
 tooltip label {
-  color: @fg;
-  padding: 6px;
+    color: @fg;
+    padding: 4px 8px;
 }
 
 #workspaces {
-  background-color: @bg0;
-  padding: 4px 2px;
-  margin: 0 0 0 12px;
-  border-radius: 25px;
-  border: 1px solid @bg1;
-  color: @fg;
+    background-color: @bg1;
+    padding: 2px 4px;
+    margin: 4px 0 4px 4px;
+    border-radius: 8px;
+    border: 1px solid @bg3;
 }
 
 #workspaces button {
-  padding: 3px 9px 3px 9px;
-  margin: 0px 3px;
-  border-radius: 43px;
-  color: transparent;
-  background-color: @bg1;
-  transition: all 0.3s ease-in-out;
+    padding: 2px 8px;
+    margin: 2px 2px;
+    border-radius: 6px;
+    color: @dim;
+    background-color: transparent;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+#workspaces button.empty {
+    color: @dim;
+    background-color: transparent;
 }
 
 #workspaces button.active {
-  background-color: @blue;
-  color: @bg0;
-  min-width: 45px;
-  transition: all 0.3s ease-in-out;
-  font-size: 13px;
+    color: @bg0;
+    background-color: @cyan;
+    box-shadow: 0 0 8px alpha(@cyan, 0.4);
+    text-shadow: none;
 }
 
-#workspaces button.hover {
-  background-color: @purple;
-  color: @bg0;
-  border-radius: 16px;
-  min-width: 45px;
-  background-size: 400% 400%;
+#workspaces button:hover {
+    background-color: @bg3;
+    color: @fg;
 }
 
-/* 
-#workspaces button.urgent{
-  background-color: @red;
-  color: @bg0;
-  border-radius: 16px;
-  min-width: 45px;
-  bacground-size: 400% 400%;
-  transition: all 0.3s ease-in-out;
-} */
-
-#battery,
-#pulseaudio,
-#network,
 #clock,
+#custom-uptime,
+#custom-signal,
+#custom-battery,
+#custom-volume,
+#custom-cpu,
+#custom-memory,
 #custom-notification {
-  background-color: @bg0;
-  padding: 0 15px 0 15px;
-  margin: 0 5px 0 12px;
-  border-radius: 45px;
-  border: 1px solid @bg1;
+    background-color: @bg2;
+    padding: 2px 12px;
+    margin: 4px 2px;
+    border-radius: 8px;
+    border: 1px solid @bg3;
+    color: @fg;
 }
 
 #clock {
-  color: @blue;
+    color: @cyan;
+    font-weight: 700;
+    font-size: 14px;
 }
+
+#custom-uptime {
+    color: @blue;
+}
+
+#custom-signal {
+    color: @cyan;
+}
+
+#custom-battery {
+    color: @green;
+}
+
+#custom-volume {
+    color: @fg;
+}
+
+#custom-cpu {
+    color: @yellow;
+}
+
+#custom-memory {
+    color: @yellow;
+}
+
 #custom-notification {
-  color: @fg;
+    color: @fg;
+    margin-right: 4px;
 }
-#pulseaudio {
-  color: @yellow;
+
+#custom-notification.notification {
+    color: @cyan;
 }
-#network {
-  color: @purple;
-}
-#battery {
-  color: @green;
+
+#custom-notification.dnd {
+    color: @dim;
 }

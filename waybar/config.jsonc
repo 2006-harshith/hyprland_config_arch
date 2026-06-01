@@ -1,120 +1,81 @@
 {
-  "posiion": "top",
-  "margin-top": 9,
+  "position": "top",
+  "margin-top": 6,
+  "margin-left": 10,
+  "margin-right": 10,
+  "spacing": 0,
   "modules-left": [
-    "clock",
     "hyprland/workspaces"
   ],
   "modules-center": [
-    "tray"
+    "clock",
+    "custom/uptime",
+    "custom/signal",
+    "custom/battery",
+    "custom/volume",
+    "custom/cpu",
+    "custom/memory"
   ],
   "modules-right": [
-    "pulseaudio",
-    "network",
-    "battery",
     "custom/notification"
   ],
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "active": "󰽢",
+      "default": "",
+      "empty": ""
+    },
+    "persistent-workspaces": {
+      "*": 5
+    },
+    "on-click": "activate"
+  },
   "clock": {
     "interval": 60,
-    "tooltip": true,
     "format": "{:%H:%M}",
-    "tooltip-format": "{:%d-%m-%Y}",
-    "actions": {
-      "on-click": "tooltip-format"
-    }
+    "tooltip": true,
+    "tooltip-format": "{:%A, %d %B %Y}"
   },
-  //   "hyprland/workspaces": {
-  // 	"format": "{name}",
-  //        "persistent-workspaces": {
-  //              "*": 5, // 5 workspaces by default on every monitor
-  //              "HDMI-A-1": 3 // but only three on HDMI-A-1
-  //        }
-  // }
-  "hyprland/workspaces": {
-    "format": "{icon}:{windows}",
-    "format-window-separator": " ",
-    "workspace-taskbar": {
-      "enable": true,
-      "update-active-window": true,
-      "format": "{icon}",
-      "icon-size": 20,
-      "on-click-window": "${SCRIPTS}/focus-window.sh {address} {button}"
-    }
-  },
-  "tray": {
-    "icon-size": 20,
-    "spacing": 9
-  },
-  "pulseaudio": {
-    "format": "{volume}%{icon}",
-    "format-bluetooth": "{volume}%{icon}",
-    "format-muted": "",
-    "scroll-step": 1,
-    "on-click": "pavucontrol",
-    "ignored-sinks": [
-      "Easy Effects Sink"
-    ]
-  },
-  "network": {
-    "interface": "wlan0",
-    "format": "{ifname}",
-    "format-wifi": "{essid} ({signalStrength}%)<big></big>",
-    "format-ethernet": "{ipaddr}/{cidr}",
-    "format-disconnected": "", //An empty format will hide the module.
-    "tooltip-format": "{ifname} via {gwaddr} 󰊗",
-    "tooltip-format-wifi": "{essid} ({signalStrength}%) <big></big>",
-    "tooltip-format-ethernet": "{ifname} ",
-    "tooltip-format-disconnected": "Disconnected",
-    "max-length": 45
-  },
-  "battery": {
+  "custom/uptime": {
+    "exec": "~/.config/waybar/scripts/telemetry-uptime.sh",
     "interval": 60,
-    "format": "{capacity}% {icon}",
-    "format-icons": {
-      "default": [
-        "󰂎",
-        "󰁺",
-        "󰁻",
-        "󰁼",
-        "󰁽",
-        "󰁾",
-        "󰁿",
-        "󰂀",
-        "󰂁",
-        "󰂂",
-        "󰁹"
-      ],
-      "charging": [
-        "<big>󰢟</big>",
-        "<big>󰢜</big>",
-        "<big>󰂆</big>",
-        "<big>󰂇</big>",
-        "<big>󰂈</big>",
-        "<big>󰢝</big>",
-        "<big>󰂉</big>",
-        "<big>󰢞</big>",
-        "<big>󰂊</big>",
-        "<big>󰂋</big>",
-        "<big>󰂅</big>"
-      ]
-    }
+    "tooltip": false
+  },
+  "custom/signal": {
+    "exec": "~/.config/waybar/scripts/telemetry-signal.sh",
+    "interval": 10,
+    "tooltip": false
+  },
+  "custom/battery": {
+    "exec": "~/.config/waybar/scripts/telemetry-battery.sh",
+    "interval": 30,
+    "tooltip": false
+  },
+  "custom/volume": {
+    "exec": "~/.config/waybar/scripts/telemetry-volume.sh",
+    "interval": 3,
+    "tooltip": false,
+    "on-click": "pavucontrol",
+    "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+  },
+  "custom/cpu": {
+    "exec": "~/.config/waybar/scripts/telemetry-cpu.sh",
+    "interval": 5,
+    "tooltip": false
+  },
+  "custom/memory": {
+    "exec": "~/.config/waybar/scripts/telemetry-memory.sh",
+    "interval": 10,
+    "tooltip": false
   },
   "custom/notification": {
-    "tooltip": true,
-    "format": "<span size='16pt'>{icon}</span>",
-    "format-icons": {
-      "notification": "󱅫",
-      "none": "󰂜",
-      "dnd-notification": "󰂠",
-      "dnd-none": "󰪓",
-      "inhibited-notification": "󰂛",
-      "inhibited-none": "󰪑",
-      "dnd-inhibited-notification": "󰂛",
-      "dnd-inhibited-none": "󰪑"
-    },
-    "return-type": "json",
+    "exec": "~/.config/waybar/scripts/telemetry-notification.sh",
     "exec-if": "which swaync-client",
-    "exec": "swaync-client -swb",
+    "return-type": "json",
+    "interval": 3,
+    "tooltip": true,
     "on-click": "swaync-client -t -sw",
     "on-click-right": "swaync-client -d -sw",
     "escape": true
