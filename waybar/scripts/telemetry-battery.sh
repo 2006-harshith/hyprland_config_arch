@@ -22,4 +22,4 @@ bar=""
 for ((i=0; i<filled; i++)); do bar+="█"; done
 for ((i=0; i<empty; i++)); do bar+="░"; done
 
-printf "CORE %s %2d%%\n" "$bar" "$capacity"
+printf "|CORE| %s %2d%%\n" "$bar" "$capacity"
