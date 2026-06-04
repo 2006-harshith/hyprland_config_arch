@@ -5,7 +5,7 @@ import "converted_ship"
 import Quickshell.Services.UPower
 
 ShellRoot {
-    property bool showAnimation: true
+    property bool showAnimation: false
 
     Component.onCompleted: {
         console.log("On battery:", UPower.onBattery)
@@ -17,7 +17,7 @@ ShellRoot {
             console.log("BATTERY EVENT")
             console.log("On battery:", UPower.onBattery)
             if (!UPower.onBattery) {
-
+                showAnimation = true
                 console.log("CHARGER CONNECTED")
                 flyAnim.stop()
                 ship.xPos = -3000
@@ -28,7 +28,7 @@ ShellRoot {
         }
     }
     PanelWindow {
-        
+        visible: showAnimation
         anchors {
             left: true
             right: true
@@ -58,8 +58,9 @@ ShellRoot {
                 id: ship
                 scale: Qt.vector3d(180, 180, 180)
                 property real xPos: -3000
+                property real yPos: 0
                 property real spin: 0
-                position: Qt.vector3d(xPos, 0, 0)
+                position: Qt.vector3d(xPos, yPos, 0)
                 
                 eulerRotation: Qt.vector3d(
                     0,
@@ -72,6 +73,7 @@ ShellRoot {
                     running: false
                     onFinished: {
                         console.log("FLY FINISHED")
+                        showAnimation = false
                     }
 
                     onStarted: {
@@ -96,6 +98,14 @@ ShellRoot {
                             from: 0
                             to: 720
                             duration: 1400
+                            easing.type: Easing.OutCubic
+                        }
+                        NumberAnimation {
+                            target: ship
+                            property: "yPos"
+                            from: 250
+                            to: 0
+                            duration: 1850
                             easing.type: Easing.OutCubic
                         }
                     }
@@ -127,6 +137,61 @@ ShellRoot {
                 }
             }
         }
-    
+        Text {
+            id: chargingText
+
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 220
+
+            text: "󰠠 POWERING 󰠠"
+
+            color: "#66ff88"
+
+            font.pixelSize: 60
+            font.bold: true
+            font.family: "JetBrains Mono"
+
+            style: Text.Outline
+            styleColor: "#22aa44"
+
+            opacity: 0
+
+            SequentialAnimation on opacity {
+                running: flyAnim.running
+
+                NumberAnimation {
+                    from: 0
+                    to: 1
+                    duration: 300
+                }
+
+                PauseAnimation {
+                    duration: 2200
+                }
+
+                NumberAnimation {
+                    from: 1
+                    to: 0
+                    duration: 800
+                }
+            }
+            SequentialAnimation on scale {
+                loops: Animation.Infinite
+                running: flyAnim.running
+
+                NumberAnimation {
+                    from: 1.0
+                    to: 1.05
+                    duration: 700
+                }
+
+                NumberAnimation {
+                    from: 1.05
+                    to: 1.0
+                    duration: 700
+                }
+            }
+        }
     }
 }
