@@ -1,0 +1,134 @@
+import QtQuick
+import QtQuick3D
+import Quickshell
+import "converted_ship"
+import Quickshell.Services.UPower
+
+ShellRoot {
+    property bool showAnimation: false
+
+    Component.onCompleted: {
+        console.log("On battery:", UPower.onBattery)
+    }
+    Connections {
+        target: UPower
+
+        function onOnBatteryChanged() {
+            console.log("BATTERY EVENT")
+            console.log("On battery:", UPower.onBattery)
+            if (!UPower.onBattery) {
+                console.log("CHARGER CONNECTED")
+                flyAnim.stop()
+                ship.xPos = -3000
+                ship.spin = 0
+                showAnimation = true
+                flyAnim.start()
+            }
+        }
+    }
+    PanelWindow {
+        
+        visible: showAnimation
+       
+        anchors {
+            left: true
+            right: true
+            top: true
+            bottom: true
+        }
+
+        View3D {
+            anchors.fill: parent
+
+            environment: SceneEnvironment {
+                clearColor: "black"
+                backgroundMode: SceneEnvironment.Color
+            }
+
+            PerspectiveCamera {
+                id: camera
+                position: Qt.vector3d(0, 0, 1400)
+            }
+
+            DirectionalLight {
+                eulerRotation.x: -30
+                brightness: 6
+            }
+
+            Rick_and_morty_space_ship {
+                id: ship
+                scale: Qt.vector3d(180, 180, 180)
+                property real xPos: -3000
+                property real spin: 0
+                position: Qt.vector3d(xPos, 0, 0)
+                
+                eulerRotation: Qt.vector3d(
+                    0,
+                    spin,
+                    0
+                )
+                
+                SequentialAnimation {
+                    id: flyAnim
+                    running: false
+                    onFinished: {
+                        console.log("FLY FINISHED")
+                        showAnimation = false
+                    }
+
+                    onStarted: {
+                        console.log("FLY STARTED")
+                    }
+
+                    // Fly in
+                    ParallelAnimation {
+
+                        NumberAnimation {
+                            target: ship
+                            property: "xPos"
+                            from: -3000
+                            to: 0
+                            duration: 1850
+                            easing.type: Easing.OutCubic
+                        }
+
+                        NumberAnimation {
+                            target: ship
+                            property: "spin"
+                            from: 0
+                            to: 720
+                            duration: 1400
+                            easing.type: Easing.OutCubic
+                        }
+                    }
+
+                    PauseAnimation {
+                        duration: 400
+                    }
+
+                    // Final spin before leaving
+                    ParallelAnimation {
+                        NumberAnimation {
+                            target: ship
+                            property: "spin"
+                            from: 720
+                            to: 1200
+                            duration: 1200
+                            easing.type: Easing.InOutQuad
+                        }
+
+                        NumberAnimation {
+                            target: ship
+                            property: "xPos"
+                            from: 0
+                            to: 3500
+                            duration: 1850
+                            easing.type: Easing.InQuad
+                        }
+                    }
+                }
+            }
+        }
+    
+    }
+}
