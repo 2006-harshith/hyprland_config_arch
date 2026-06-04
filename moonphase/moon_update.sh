@@ -7,7 +7,7 @@ CACHE="$MOON_DIR/cache"
 
 mkdir -p "$CACHE"
 
-CURRENT=$(python "$MOON_DIR/frame_calc.py")
+CURRENT=$(lua "$MOON_DIR/frame_calc.lua")
 
 PREV=$((CURRENT - 1))
 NEXT=$((CURRENT + 1))
