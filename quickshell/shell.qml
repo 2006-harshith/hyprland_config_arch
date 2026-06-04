@@ -3,9 +3,25 @@ import QtQuick3D
 import Quickshell
 import "converted_ship"
 import Quickshell.Services.UPower
+import Quickshell.Io
 
 ShellRoot {
     property bool showAnimation: false
+    Process {
+        id: enterSound
+        command: [
+            "pw-play",
+            "/home/harshith/.config/quickshell/assets/enter_sound.wav"
+        ]
+    }
+
+    Process {
+        id: exitSound
+        command: [
+            "pw-play",
+            "/home/harshith/.config/quickshell/assets/exit.wav"
+        ]
+    }
 
     Component.onCompleted: {
         console.log("On battery:", UPower.onBattery)
@@ -19,6 +35,7 @@ ShellRoot {
             if (!UPower.onBattery) {
                 showAnimation = true
                 console.log("CHARGER CONNECTED")
+                enterSound.running = true
                 flyAnim.stop()
                 ship.xPos = -3000
                 ship.spin = 0
@@ -112,6 +129,11 @@ ShellRoot {
 
                     PauseAnimation {
                         duration: 400
+                    }
+                    ScriptAction {
+                        script: {
+                            exitSound.running = true
+                        }
                     }
 
                     // Final spin before leaving
