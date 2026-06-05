@@ -8,7 +8,7 @@ import "windows"
 ShellRoot {
 
     property bool showAnimation: false
-    property bool showObservatory: true
+    property bool showObservatory: false
     
 
     Process {
@@ -53,7 +53,17 @@ ShellRoot {
             showAnimation = false
         }
     }
-    
+
+    FileView {
+        id: observatoryToggle
+
+        path: "/tmp/observatory-toggle"
+        watchChanges: true
+
+        onFileChanged: {
+            showObservatory = !showObservatory
+        }
+    }    
 
     Observatory {
         visible: showObservatory
