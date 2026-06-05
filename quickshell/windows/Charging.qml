@@ -1,0 +1,194 @@
+import QtQuick
+import QtQuick3D
+import Quickshell
+import "../converted_ship"
+import Quickshell.Services.UPower
+import Quickshell.Io
+
+
+PanelWindow {
+
+    visible: true
+
+    signal playExitSound()
+    signal animationFinished()
+
+    function playAnimation() {
+        ship.xPos = -3000
+        ship.yPos = 250
+        ship.spin = 0
+
+        flyAnim.stop()
+        flyAnim.start()
+    }
+
+    anchors {
+        left: true
+        right: true
+        top: true
+        bottom: true
+    }
+
+    View3D {
+        anchors.fill: parent
+
+        environment: SceneEnvironment {
+            clearColor: "black"
+            backgroundMode: SceneEnvironment.Color
+        }
+
+        PerspectiveCamera {
+            id: camera
+            position: Qt.vector3d(0, 0, 1400)
+        }
+
+        DirectionalLight {
+            eulerRotation.x: -30
+            brightness: 6
+        }
+
+        Rick_and_morty_space_ship {
+            id: ship
+            scale: Qt.vector3d(180, 180, 180)
+            property real xPos: -3000
+            property real yPos: 0
+            property real spin: 0
+            position: Qt.vector3d(xPos, yPos, 0)
+            
+            eulerRotation: Qt.vector3d(
+                0,
+                spin,
+                0
+            )
+            
+            SequentialAnimation {
+                id: flyAnim
+                running: false
+                onFinished: {
+                    console.log("FLY FINISHED")
+                    animationFinished()
+                }
+
+                onStarted: {
+                    console.log("FLY STARTED")
+                }
+
+                // Fly in
+                ParallelAnimation {
+
+                    NumberAnimation {
+                        target: ship
+                        property: "xPos"
+                        from: -3000
+                        to: 0
+                        duration: 1850
+                        easing.type: Easing.OutCubic
+                    }
+
+                    NumberAnimation {
+                        target: ship
+                        property: "spin"
+                        from: 0
+                        to: 720
+                        duration: 1400
+                        easing.type: Easing.OutCubic
+                    }
+                    NumberAnimation {
+                        target: ship
+                        property: "yPos"
+                        from: 250
+                        to: 0
+                        duration: 1850
+                        easing.type: Easing.OutCubic
+                    }
+                }
+
+                PauseAnimation {
+                    duration: 400
+                }
+                ScriptAction {
+                    script: {
+                        playExitSound()
+                    }
+                }
+
+                // Final spin before leaving
+                ParallelAnimation {
+                    NumberAnimation {
+                        target: ship
+                        property: "spin"
+                        from: 720
+                        to: 1200
+                        duration: 1200
+                        easing.type: Easing.InOutQuad
+                    }
+
+                    NumberAnimation {
+                        target: ship
+                        property: "xPos"
+                        from: 0
+                        to: 3500
+                        duration: 1850
+                        easing.type: Easing.InQuad
+                    }
+                }
+            }
+        }
+    }
+    Text {
+        id: chargingText
+
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 220
+
+        text: "󰠠 POWERING 󰠠"
+
+        color: "#66ff88"
+
+        font.pixelSize: 60
+        font.bold: true
+        font.family: "JetBrains Mono"
+
+        style: Text.Outline
+        styleColor: "#22aa44"
+
+        opacity: 0
+
+        SequentialAnimation on opacity {
+            running: flyAnim.running
+
+            NumberAnimation {
+                from: 0
+                to: 1
+                duration: 300
+            }
+
+            PauseAnimation {
+                duration: 2200
+            }
+
+            NumberAnimation {
+                from: 1
+                to: 0
+                duration: 800
+            }
+        }
+        SequentialAnimation on scale {
+            loops: Animation.Infinite
+            running: flyAnim.running
+
+            NumberAnimation {
+                from: 1.0
+                to: 1.05
+                duration: 700
+            }
+
+            NumberAnimation {
+                from: 1.05
+                to: 1.0
+                duration: 700
+            }
+        }
+    }
+}
