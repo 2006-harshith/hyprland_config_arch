@@ -8,7 +8,8 @@ import "windows"
 ShellRoot {
 
     property bool showAnimation: false
-    property bool showObservatory: false
+    property bool showObservatory: true
+    
 
     Process {
         id: enterSound
