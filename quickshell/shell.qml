@@ -53,6 +53,7 @@ ShellRoot {
             showAnimation = false
         }
     }
+    
 
     Observatory {
         visible: showObservatory

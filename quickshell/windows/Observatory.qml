@@ -11,6 +11,9 @@ PanelWindow {
     property string moonDec: ""
     property string moonTime: ""
 
+    property string currentTime: ""
+    property string currentDate: ""
+
     property string weatherTemp: ""
     property string weatherHumidity: ""
     property string weatherClouds: ""
@@ -100,11 +103,72 @@ PanelWindow {
             }
         }
     }
+    Process {
+        id: playPauseProc
+        command: ["playerctl", "play-pause"]
+    }
 
+    Process {
+        id: nextProc
+        command: ["playerctl", "next"]
+    }
+
+    Process {
+        id: previousProc
+        command: ["playerctl", "previous"]
+    }
+
+    Timer {
+        interval: 300000
+        running: true
+        repeat: true
+
+        onTriggered: {
+            weatherProc.running = true
+        }
+    }
+    Timer {
+        interval: 3600000
+        running: true
+        repeat: true
+
+        onTriggered: {
+            moonProc.running = true
+        }
+    }
+
+    Timer {
+        interval: 1000
+        running: true
+        repeat: true
+
+        onTriggered: {
+            const now = new Date()
+
+            currentTime = Qt.formatTime(now, "HH:mm:ss")
+            currentDate = Qt.formatDate(now, "dddd, dd MMM yyyy")
+        }
+    }
+    
+    //clock
     Component.onCompleted: {
+        const now = new Date()
+
+        currentTime = Qt.formatTime(now, "HH:mm:ss")
+        currentDate = Qt.formatDate(now, "dddd, dd MMM yyyy")
+
         moonProc.running = true
         weatherProc.running = true
         musicProc.running = true
+    }
+    Timer {
+        id: musicRefreshTimer
+        interval: 500
+        repeat: false
+
+        onTriggered: {
+            musicProc.running = true
+        }
     }
 
     Rectangle {
@@ -114,6 +178,15 @@ PanelWindow {
         Column {
             anchors.centerIn: parent
             spacing: 8
+
+            Text {
+                color: "white"
+                text: "Time: " + currentTime
+            }
+            Text {
+                color: "white"
+                text: currentDate
+            }
 
             Text {
                 color: "white"
@@ -144,10 +217,7 @@ PanelWindow {
                 text: "DEC: " + moonDec
             }
 
-            Text {
-                color: "white"
-                text: "Time: " + moonTime
-            }
+            
 
             Text {
                 color: "white"
@@ -184,6 +254,78 @@ PanelWindow {
             Text {
                 color: "white"
                 text: "Status: " + songStatus
+            }
+            Row {
+                spacing: 20
+
+                Rectangle {
+                    width: 50
+                    height: 50
+                    radius: 25
+                    color: "#303030"
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: "⏮"
+                        color: "white"
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+
+                        onClicked: {
+                            previousProc.running = true
+                            musicRefreshTimer.start()
+                            musicProc.running = true
+                        }
+                    }
+                }
+
+                Rectangle {
+                    width: 60
+                    height: 60
+                    radius: 30
+                    color: "#505050"
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: songStatus === "Playing" ? "⏸" : "▶"
+                        color: "white"
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+
+                        onClicked: {
+                            playPauseProc.running = true
+                            musicRefreshTimer.start()
+                            musicProc.running = true
+                        }
+                    }
+                }
+
+                Rectangle {
+                    width: 50
+                    height: 50
+                    radius: 25
+                    color: "#303030"
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: "⏭"
+                        color: "white"
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+
+                        onClicked: {
+                            nextProc.running = true
+                            musicRefreshTimer.start()
+                            musicProc.running = true
+                        }
+                    }
+                }
             }
         }
     }
