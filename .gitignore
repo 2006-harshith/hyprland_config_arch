@@ -15,6 +15,8 @@ systemd/user/appimagelauncherd.service
 systemd/user/pipewire-session-manager.service
 wayweather/
 user-share/
+moonphase/cache/
+htop/
 
 .gsd-keyboard.settings-ported
 appimagelauncher.cfg
