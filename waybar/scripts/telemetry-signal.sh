@@ -1,5 +1,5 @@
 #!/bin/bash
-strength=$(nmcli -t -f SIGNAL,ACTIVE dev wifi | awk -F: '$2=="yes"{print $1}')
+strength=$(LC_ALL=C nmcli -t -f SIGNAL,ACTIVE dev wifi | awk -F: '$2=="yes"{print $1}')
 
 if [ -z "$strength" ]; then
     echo "SIGNAL ░░░░░░░░░░ --"
