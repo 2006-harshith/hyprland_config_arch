@@ -1,4 +1,4 @@
-This repo contains all the dotfiles of my custom hyprland look in arch linux.
+This repo contains the dotfiles of my custom hyprland look in arch linux.
 
 <video src="media/video_preview.mp4" controls></video>
 
@@ -50,7 +50,7 @@ On login/startup
 At the beginning of every hour
 Because the current frame is always recalculated from UTC time, the system automatically recovers from Reboots, Shutdowns, Sleep/Suspend states, Missed update intervals. No manual synchronization is required.
 
-Features:
+# Features:
 
 1. The topbar is designed to match the theme
 2. I ran quickshell to explicitly show charger connection Whenever it detects charger is connected, Rick's spaceship from rick and morty flies in to indicate charging. [it is a 3d model of the spaceship]
