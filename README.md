@@ -1,33 +1,37 @@
-This repo contains all the dotfiles of my custom hyprland look in arch linux. 
+This repo contains all the dotfiles of my custom hyprland look in arch linux.
 
-# Wallpaper 
+<video src="media/video_preview.mp4" controls></video>
+
+# Wallpaper
 
 I built a custom dynamic wallpaper that showcases the Moon's current appearance. It reflects the Moon's real-time phase, libration, illumination, orientation, and visible surface features based on the current time.
-In simple words, it will show the Moon's real-world appearance. 
+In simple words, it will show the Moon's real-world appearance.
 
 ```
 moonphase/
-├── cache/                 
-│   ├── 3591.png           
-│   ├── 3592.png           
-│   └── 3593.png           
+├── cache/
+│   ├── 3591.png
+│   ├── 3592.png
+│   └── 3593.png
 │
-├── frame_calc.py          
-├── moon_update.sh         
-├── mooninfo_2026.json     
-└── setup_timer.sh         
+├── frame_calc.py
+├── moon_update.sh
+├── mooninfo_2026.json
+└── setup_timer.sh
 ```
 
 ## How it works:
-Pipeline of the process: 
+
+process pipeline:
+
 - **Frame collection** <br>
-*frame_calc.py*  will  calculate the frame number using the current utc timestamp (year, month, day, date, hour). 
+  _frame_calc.py_ will calculate the frame number using the current utc timestamp (year, month, day, date, hour).
 
 - **image retrieval** <br>
-using the frame number generated using frame_calc.py, we can determine and download the exact Image from the NASA Scientific Visualization Studio. 
-*moon_update.sh* script will use frame_calc, get the frame number, download the .tif file for next frame , convert it to png using magick tool to convert tif file to png file, use hyprpaper to change the wallpaper. 
+  using the frame number generated using frame*calc.py, we can determine and download the exact Image from the NASA Scientific Visualization Studio.
+  \_moon_update.sh* script will use frame_calc, get the frame number, download the .tif file for next frame , convert it to png using magick tool to convert tif file to png file, use hyprpaper to change the wallpaper.
 
-- **Cache management** 
+- **Cache management**
 
 A rolling cache is maintained containing:
 
@@ -44,9 +48,13 @@ A systemd user timer runs `moon_update.sh` automatically:
 
 On login/startup
 At the beginning of every hour
-Because the current frame is always recalculated from UTC time, the system automatically recovers from Reboots, Shutdowns, Sleep/Suspend states, Missed update intervals
+Because the current frame is always recalculated from UTC time, the system automatically recovers from Reboots, Shutdowns, Sleep/Suspend states, Missed update intervals. No manual synchronization is required.
 
-No manual synchronization is required.
+Features:
 
+1. The topbar is designed to match the theme
+2. I ran quickshell to explicitly show charger connection Whenever it detects charger is connected, Rick's spaceship from rick and morty flies in to indicate charging. [it is a 3d model of the spaceship]
+3. and whenever you clear the terminal, it neuralyzes you. (neuralyzer from Men in Black)
+4. Next thing is called observatory, kind of like relax and observe the moon with the moon's current scientific details, current weather info (Office of observation), time, etc.,
 
-
+I wanted to create a more usable desktop experience with moon-themed customization integrated throughout the system
