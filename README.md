@@ -1,6 +1,7 @@
-This repo contains the dotfiles of my custom hyprland look in arch linux.
+This repository contains the dotfiles of my custom hyprland customisation in Arch linux.
 
 <video src="media/video_preview.mp4" controls></video>
+<https://www.youtube.com/watch?v=je7a1RhekLE> Video preview of my customisation and submission
 
 # Wallpaper
 
