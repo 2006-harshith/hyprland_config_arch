@@ -8,7 +8,7 @@ for p in /sys/class/power_supply/BAT0 /sys/class/power_supply/BAT1 /sys/class/po
 done
 
 if [ -z "$bat_path" ]; then
-    echo "CORE ██████████ AC"
+    echo "POWER ██████████ AC"
     exit 0
 fi
 
@@ -22,4 +22,4 @@ bar=""
 for ((i=0; i<filled; i++)); do bar+="█"; done
 for ((i=0; i<empty; i++)); do bar+="░"; done
 
-printf "|CORE| %s %2d%%\n" "$bar" "$capacity"
+printf "|POWER| %s %2d%%\n" "$bar" "$capacity"
