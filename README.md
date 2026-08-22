@@ -2,6 +2,7 @@ This repository contains the dotfiles of my custom hyprland customisation in Arc
 
 <video src="media/video_preview.mp4" controls></video>
 <https://www.youtube.com/watch?v=je7a1RhekLE> Video preview of my customisation and submission
+* **Full Event VOD:** <https://www.youtube.com/watch?v=Rtgo3oE66nY>  — Live stream of the competition judgement.
 
 # Wallpaper
 
@@ -61,4 +62,4 @@ Because the current frame is always recalculated from UTC time, the system autom
 I wanted to create a more usable desktop experience with moon-themed customization integrated throughout the system
 
 This configuration was submitted to the official Hyprland Desktop Customization Competition, placing **#7 overall**. 
-* **Full Event VOD:** <https://www.youtube.com/watch?v=Rtgo3oE66nY>  — Live stream archive of the tournament judging panel.
+
